@@ -1,5 +1,5 @@
-#include <iostream>
-#include "../include/text.hpp"
+#include "text.hpp"
+
 Text::Text(char* text) : text(text){
     size = 0;
     for(size_t i = 0; text[i] != '\0'; i++){
