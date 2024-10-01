@@ -46,5 +46,8 @@ void Editor::put(char* word){
 }
 
 void Editor::del(){
-    text.del(cursor_pos);
+    if(cursor_pos == 0){}
+    else{
+        text.remove(cursor_pos - 1, cursor_pos - 1);
+    }
 }
