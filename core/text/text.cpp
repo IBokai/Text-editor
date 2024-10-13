@@ -15,6 +15,17 @@ size_t Text::get_size(){
     return size;
 }
 
-void Text::print(){
-    std::cout << text << '\n';
+void Text::find(const char& x){
+    is_highlighted = new bool[size];
+    for(int i = 0; i < size; i++){
+        if(text[i] == x){
+            is_highlighted[i] = true;
+        }
+    }
+    print(true);
+    delete[] is_highlighted;
 }
+
+char Text::operator[](size_t index) const{
+    return text[index];
+};
