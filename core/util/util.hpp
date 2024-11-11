@@ -1,4 +1,7 @@
-#pragma once
+#ifndef UTIL_HPP
+#define UTIL_HPP
 #include <iostream>
-
-void memcpy(char* dest, char* src, size_t n);
+namespace util{
+    void memcpy(char* dest, const char* src, size_t n);
+}
+#endif

@@ -1,29 +1,23 @@
 #include "text.hpp"
 
-Text::Text(char* text) : text(text){
+Text::Text(char* text){
     size = 0;
     for(size_t i = 0; text[i] != '\0'; i++){
         size++;
     }
+    this->text = new char[size + 1];
+    for(size_t i = 0; i < size; i++){
+        this->text[i] = text[i];
+    }
+    this->text[size] = '\0';
 }
 
 Text::~Text(){
     delete[] text;
 }
 
-size_t Text::get_size(){
+size_t Text::get_size() const{
     return size;
-}
-
-void Text::find(const char& x){
-    is_highlighted = new bool[size];
-    for(int i = 0; i < size; i++){
-        if(text[i] == x){
-            is_highlighted[i] = true;
-        }
-    }
-    print(true);
-    delete[] is_highlighted;
 }
 
 char Text::operator[](size_t index) const{
