@@ -1,7 +1,7 @@
 #include "../util/util.hpp"
 #include "text.hpp"
 
-void Text::add(const char* word, size_t word_size){
+void Text::add(const char* word, size_t word_size) {
     char* temp = new char[size];
     util::memcpy(temp, text, size);
     delete[] text;
