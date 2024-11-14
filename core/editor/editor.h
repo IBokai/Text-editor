@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "../parser/parser.h"
-#include "../text/text.hpp"
+#include "../text/text.h"
 
 class Editor {
 public:
