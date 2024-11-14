@@ -1,4 +1,4 @@
-#include "editor.hpp"
+#include "editor.h"
 
 void Editor::print() {
     system("clear");

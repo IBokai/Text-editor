@@ -1,5 +1,5 @@
-#include "../util/util.hpp"
-#include "text.hpp"
+#include "../util/util.h"
+#include "text.h"
 
 void Text::remove(size_t start_pos, size_t end_pos) {
     char* temp_left = new char[start_pos];

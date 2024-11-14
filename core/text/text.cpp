@@ -1,4 +1,4 @@
-#include "text.hpp"
+#include "text.h"
 
 Text::Text(char* text) {
     size = 0;

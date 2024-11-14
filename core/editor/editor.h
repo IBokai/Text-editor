@@ -1,9 +1,9 @@
-#ifndef EDITOR_HPP
-#define EDITOR_HPP
+#ifndef EDITOR_H
+#define EDITOR_H
 #include <set>
 #include <vector>
 
-#include "../parser/parser.hpp"
+#include "../parser/parser.h"
 #include "../text/text.hpp"
 
 class Editor {

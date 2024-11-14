@@ -1,5 +1,5 @@
-#ifndef TEXT_HPP
-#define TEXT_HPP
+#ifndef TEXT_H
+#define TEXT_H
 #include <iostream>
 #include <set>
 
@@ -8,7 +8,6 @@ public:
     Text(char* text);
     ~Text();
     size_t get_size() const;
-    void print(bool is_highlighted);
     void add(const char* word, size_t word_size);
     void insert(const char* word, size_t pos, size_t word_size);
     void remove(size_t start_pos, size_t end_pos);

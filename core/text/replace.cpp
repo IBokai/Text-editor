@@ -1,4 +1,4 @@
-#include "text.hpp"
+#include "text.h"
 
 void Text::replace(const char& x, const char& y, std::set<int>& highlighted) {
     for (int i = 0; i < size; i++) {

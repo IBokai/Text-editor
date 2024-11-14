@@ -1,5 +1,5 @@
-#include "../parser/parser.hpp"
-#include "editor.hpp"
+#include "../parser/parser.h"
+#include "editor.h"
 
 void Editor::run() {
     std::vector<const char*> arguments;

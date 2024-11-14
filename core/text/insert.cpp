@@ -1,5 +1,5 @@
-#include "../util/util.hpp"
-#include "text.hpp"
+#include "../util/util.h"
+#include "text.h"
 
 void Text::insert(const char* word, size_t pos, size_t word_size) {
     char* temp_left = new char[pos];

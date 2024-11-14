@@ -1,9 +1,9 @@
-#include "editor.hpp"
+#include "editor.h"
 
 #include <fstream>
 #include <map>
 
-#include "../parser/parser.hpp"
+#include "../parser/parser.h"
 // TODO: cursor position change
 
 std::map<std::string, ParserCommandInfo> ParsingScheme{

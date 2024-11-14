@@ -1,5 +1,5 @@
-#include "../util/util.hpp"
-#include "text.hpp"
+#include "../util/util.h"
+#include "text.h"
 
 void Text::add(const char* word, size_t word_size) {
     char* temp = new char[size];
