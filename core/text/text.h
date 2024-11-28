@@ -5,7 +5,8 @@
 
 class Text {
 public:
-    Text(char* text);
+    Text(const char* text);
+    Text();
     ~Text();
     size_t get_size() const;
     void add(const char* word, size_t word_size);
@@ -15,10 +16,10 @@ public:
     void upcase(size_t start_pos, size_t end_pos);
     void lowcase(size_t start_pos, size_t end_pos);
     char operator[](size_t index) const;
+    Text& operator=(const Text& other);
 
 private:
     char* text;
     size_t size;
-    bool* is_highlighted;
 };
 #endif
