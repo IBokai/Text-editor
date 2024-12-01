@@ -2,6 +2,6 @@
 #define UTIL_H
 #include <iostream>
 namespace util {
-void memcpy(char* dest, const char* src, size_t n);
+size_t word_size(const char* word);
 }
 #endif

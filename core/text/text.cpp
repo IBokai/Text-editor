@@ -1,6 +1,6 @@
 #include "text.h"
 
-Text::Text(char* text) {
+Text::Text(const char* text) {
     size = 0;
     for (size_t i = 0; text[i] != '\0'; i++) {
         size++;
@@ -12,8 +12,22 @@ Text::Text(char* text) {
     this->text[size] = '\0';
 }
 
+Text::Text() { text = nullptr; }
+
 Text::~Text() { delete[] text; }
 
-size_t Text::get_size() const { return size; }
-
-char Text::operator[](size_t index) const { return text[index]; };
+Text& Text::operator=(const Text& other) {
+    if (this == &other) {
+        return *this;
+    }
+    // First we need to do operations that doesnt change object fields and can produce exceptions, like copying
+    // then we can change object state
+    delete[] text;
+    text = new char[other.get_size() + 1];
+    for (size_t i = 0; i < other.get_size(); i++) {
+        text[i] = other[i];
+    }
+    text[other.get_size()] = '\0';
+    size = other.get_size();
+    return *this;
+}

@@ -1,8 +1,10 @@
-#include "util.hpp"
+#include "util.h"
 namespace util {
-void memcpy(char* dest, const char* src, size_t n) {
-    for (size_t i = 0; i < n; i++) {
-        dest[i] = src[i];
+size_t word_size(const char* word){
+    size_t word_size = 0;
+    for(size_t i = 0; word[i] != '\0'; i++){
+        word_size++;
     }
+    return word_size;
 }
 }  // namespace util
