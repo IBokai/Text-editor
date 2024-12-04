@@ -1,14 +1,12 @@
 #include <iostream>
 #include <string>
 
-#include "editor/editor.hpp"
+#include "editor/editor.h"
 
 int main() {
-    std::string text = "Lorem Ipsum";
-    char* ctext = new char[text.size()];
-    for (size_t i = 0; i < text.size(); i++) {
-        ctext[i] = text[i];
-    }
-    Editor e(ctext);
+    // std::string text = "Lorem Ipsum";
+    Editor e = Editor();
+    std::vector<char const*> v = {"/home/ivan/vi-git/core/editor/text.txt"};
+    e.load(v);
     e.run();
 }

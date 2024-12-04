@@ -5,10 +5,12 @@
 
 #include "../parser/parser.h"
 #include "../text/text.h"
+#include "../util/util.h"
 
 class Editor {
 public:
-    Editor(char* text, size_t cursor_pos = 0);
+    Editor(const char* text, size_t cursor_pos = 0);
+    Editor(size_t cursor_pos = 0);
     ~Editor();
     void print();
     size_t get_pos() const;
@@ -26,7 +28,7 @@ public:
     void replace(std::vector<char const*>& arguments);  // char* x, char* y
     void find(std::vector<char const*>& arguments);     // char* x
     void load(std::vector<char const*>& arguments);     // char* path to file
-    void save(std::vector<char const*>& arguments);
+    void save(std::vector<char const*>& arguments);     // char* path to file
     void run();
 
 private:

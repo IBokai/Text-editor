@@ -7,13 +7,13 @@
 // TODO: cursor position change
 
 std::map<std::string, ParserCommandInfo> ParsingScheme{
-        {"add", ParserCommandInfo({ParserParameter(std::regex("^[a-zA-Z]*?$"))}, &Editor::add)},
+        {"add", ParserCommandInfo({ParserParameter(std::regex(".*"))}, &Editor::add)},
         {"move",
          ParserCommandInfo({ParserParameter(std::regex("^[1-9]*?[0-9]*?$"))}, &Editor::move)},
         {"insert", ParserCommandInfo({ParserParameter(std::regex("^[1-9][0-9]*?$")),
-                                      ParserParameter(std::regex("^[a-zA-Z]*?$"))},
+                                      ParserParameter(std::regex(".*"))},
                                      &Editor::insert)},
-        {"put", ParserCommandInfo({ParserParameter(std::regex("^[a-zA-Z]*?$"))}, &Editor::put)},
+        {"put", ParserCommandInfo({ParserParameter(std::regex(".*"))}, &Editor::put)},
         {"remove", ParserCommandInfo({ParserParameter(std::regex("^[1-9][0-9]*?$")),
                                       ParserParameter(std::regex("^[1-9][0-9]*?$"))},
                                      &Editor::remove)},
@@ -32,42 +32,44 @@ std::map<std::string, ParserCommandInfo> ParsingScheme{
         {"find", ParserCommandInfo({ParserParameter(std::regex("^[a-zA-Z]*?$"))}, &Editor::find)},
 };
 
-Editor::Editor(char* text, size_t cursor_pos)
+Editor::Editor(const char* text, size_t cursor_pos)
     : text(Text(text)), cursor_pos(cursor_pos), parser(Parser(ParsingScheme)) {}
+
+Editor::Editor(size_t cursor_pos) : parser(Parser(ParsingScheme)), cursor_pos(cursor_pos) {}
 
 Editor::~Editor() {}
 
 size_t Editor::get_pos() const { return cursor_pos; }
 
 void Editor::add(std::vector<char const*>& arguments) {
-    size_t word_size = 0;
-    for (int i = 0; arguments[0][i] != '\0'; i++) {
-        word_size++;
-    }
+    size_t word_size = util::word_size(arguments[0]);
     text.add(arguments[0], word_size);
 }
 
-void Editor::move(std::vector<char const*>& arguments) { cursor_pos = std::stoi(arguments[0]); }
+void Editor::move(std::vector<char const*>& arguments) {
+    if (std::stoi(arguments[0]) > text.get_size()) {
+        cursor_pos = text.get_size();
+    } else {
+        cursor_pos = std::stoi(arguments[0]);
+    }
+}
 
 void Editor::insert(std::vector<char const*>& arguments) {
-    size_t word_size = 0;
-    for (size_t i = 0; arguments[1][i] != '\0'; i++) {
-        word_size++;
-    }
+    size_t word_size = util::word_size(arguments[0]);
+    // U can write a function for that or use C one. And maybe move that into text(?) = solved
+    // (decided to keep word_size measure in editor class)
     text.insert(arguments[1], std::stoi(arguments[0]), word_size);
 }
 
 void Editor::put(std::vector<char const*>& arguments) {
-    size_t word_size = 0;
-    for (size_t i = 0; arguments[0][i] != '\0'; i++) {
-        word_size++;
-    }
+    size_t word_size = util::word_size(arguments[0]);
     text.insert(arguments[0], cursor_pos, word_size);
     cursor_pos += word_size;
 }
 
 void Editor::remove(std::vector<char const*>& arguments) {
     text.remove(std::stoi(arguments[0]), std::stoi(arguments[1]));
+    cursor_pos = cursor_pos - (std::stoi(arguments[1]) - std::stoi(arguments[0]));
 }
 
 void Editor::del(std::vector<char const*>& arguments) {
@@ -75,6 +77,7 @@ void Editor::del(std::vector<char const*>& arguments) {
     } else {
         text.remove(cursor_pos - 1, cursor_pos - 1);
     }
+    cursor_pos -= 1;
 }
 
 void Editor::deln(std::vector<char const*>& arguments) {
@@ -109,16 +112,16 @@ void Editor::moverw(std::vector<char const*>& arguments) {
 void Editor::upcase(std::vector<char const*>& arguments) {
     size_t start_pos = cursor_pos;
     size_t end_pos = cursor_pos;
-    for (start_pos; text[start_pos] != ' '; start_pos--);
-    for (end_pos; text[end_pos] != ' '; end_pos++);
+    for (start_pos; text[start_pos] != ' ' && start_pos != 0; start_pos--);
+    for (end_pos; text[end_pos] != ' ' && end_pos != text.get_size(); end_pos++);
     text.upcase(start_pos, end_pos);
 }
 
 void Editor::lowcase(std::vector<char const*>& arguments) {
     size_t start_pos = cursor_pos;
     size_t end_pos = cursor_pos;
-    for (start_pos; text[start_pos] != ' '; start_pos--);
-    for (end_pos; text[end_pos] != ' '; end_pos++);
+    for (start_pos; text[start_pos] != ' ' && start_pos != 0; start_pos--);
+    for (end_pos; text[end_pos] != ' ' && end_pos != text.get_size(); end_pos++);
     text.lowcase(start_pos, end_pos);
 }
 
@@ -135,6 +138,19 @@ void Editor::find(std::vector<char const*>& arguments) {
 }
 
 void Editor::load(std::vector<char const*>& arguments) {
-    std::fstream f;
-    f.open(arguments[0]);
+    std::ifstream f(arguments[0]);
+    std::string curr_str;
+    std::string all_str;
+    while (std::getline(f, curr_str)) {
+        all_str += curr_str;
+    }
+    char* c_all_str = new char[all_str.size() + 1];
+    for (int i = 0; i < all_str.size(); i++) {
+        c_all_str[i] = all_str[i];
+    }
+    c_all_str[all_str.size()] = '\0';
+    text = Text(c_all_str);
+    delete[] c_all_str;
 }
+
+void Editor::save(std::vector<char const*>& arguments) {}

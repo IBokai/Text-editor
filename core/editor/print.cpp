@@ -1,5 +1,5 @@
 #include "editor.h"
-
+// TODO: enums for borders(?)
 void Editor::print() {
     system("clear");
     size_t text_pos = 0;
@@ -12,14 +12,12 @@ void Editor::print() {
         for (int i = 0; i < 80; i++) {
             if (text_pos < text.get_size()) {
                 if (highlighted.count(text_pos)) {
-                    std::cout << "\033[0;31m" << text[text_pos] << "\033[0m";
-                }
-                if (text_pos == cursor_pos) {
-                    std::cout << "\033[36m" << text[text_pos] << "\033[0m";
+                    std::cout << "\033[0;31m" << text[text_pos] << "\033[0m";  // color
+                } else if (text_pos == cursor_pos) {
+                    std::cout << "\033[36m" << text[text_pos] << "\033[0m";  // color
                 } else {
                     std::cout << text[text_pos];
                 }
-
                 text_pos++;
             } else {
                 std::cout << ' ';

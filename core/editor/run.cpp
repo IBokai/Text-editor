@@ -5,12 +5,9 @@ void Editor::run() {
     std::vector<const char*> arguments;
     std::string input;
     print();
-    while (1) {
-        std::cout << "Enter the command: ";
-        std::getline(std::cin, input);
-        if (input == "exit") {
-            break;
-        }
+    std::cout << "Enter the command: ";
+    std::getline(std::cin, input);
+    while (input != "exit") {
         EditorMethod m = parser.parse(input, arguments);
         if (m != nullptr) {
             (this->*m)(arguments);
@@ -19,7 +16,7 @@ void Editor::run() {
             }
             arguments.clear();
             print();
-            std::cout << cursor_pos << '\n';
+            std::cout << "Cursor position: " << cursor_pos << '\n';
             highlighted.clear();
         } else {
             std::cout << "Wrong Input" << '\n';
@@ -28,6 +25,8 @@ void Editor::run() {
             }
             arguments.clear();
         }
-        std::cout << text.get_size() << '\n';
+        std::cout << "Text size: " <<text.get_size() << '\n';
+        std::cout << "Enter the command: ";
+        std::getline(std::cin, input);
     }
 }
