@@ -33,9 +33,11 @@
 
 # Build
 build
+cmake-build-debug
 
 # IDE
 .vscode
+.idea
 
 # Text file
 *.txt
