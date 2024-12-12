@@ -16,7 +16,7 @@ Parser::Parser(std::map<std::string, ParserCommandInfo>& parsingScheme)
 // etc.)
 std::vector<std::string> Parser::split(const std::string& input) {
     size_t pos = 0;
-    std::string current = "";
+    std::string current;
     std::vector<std::string> splited;
     while (input[pos] != ')') {
         if (input[pos] == ' ' || input[pos] == '(' || input[pos] == ')') {
