@@ -9,7 +9,7 @@ void Editor::print() {
     std::cout << '\n';
     for (int i = 0; i < 25; i++) {
         std::cout << '|';
-        for (int i = 0; i < 80; i++) {
+        for (int j = 0; j < 80; j++) {
             if (text_pos < text.get_size()) {
                 if (highlighted.count(text_pos)) {
                     std::cout << "\033[0;31m" << text[text_pos] << "\033[0m";  // color

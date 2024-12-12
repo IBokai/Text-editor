@@ -36,5 +36,6 @@ private:
     Parser parser;
     size_t cursor_pos;
     std::set<int> highlighted;
+    bool loaded;
 };
 #endif

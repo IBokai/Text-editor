@@ -12,7 +12,10 @@ Text::Text(const char* text) {
     this->text[size] = '\0';
 }
 
-Text::Text() { text = nullptr; }
+Text::Text() {
+    text = nullptr;
+    size = 0;
+}
 
 Text::~Text() { delete[] text; }
 
@@ -20,8 +23,8 @@ Text& Text::operator=(const Text& other) {
     if (this == &other) {
         return *this;
     }
-    // First we need to do operations that doesnt change object fields and can produce exceptions, like copying
-    // then we can change object state
+    // First we need to do operations that doesnt change object fields and can produce exceptions,
+    // like copying then we can change object state. Some questions
     delete[] text;
     text = new char[other.get_size() + 1];
     for (size_t i = 0; i < other.get_size(); i++) {

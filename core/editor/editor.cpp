@@ -30,14 +30,16 @@ std::map<std::string, ParserCommandInfo> ParsingScheme{
                                        ParserParameter(std::regex("^[a-zA-Z]*?$"))},
                                       &Editor::replace)},
         {"find", ParserCommandInfo({ParserParameter(std::regex("^[a-zA-Z]*?$"))}, &Editor::find)},
+        {"load", ParserCommandInfo({ParserParameter(std::regex(".*"))}, &Editor::load)},
 };
 
 Editor::Editor(const char* text, size_t cursor_pos)
-    : text(Text(text)), cursor_pos(cursor_pos), parser(Parser(ParsingScheme)) {}
+    : text(Text(text)), parser(Parser(ParsingScheme)), cursor_pos(cursor_pos), loaded(false) {}
 
-Editor::Editor(size_t cursor_pos) : parser(Parser(ParsingScheme)), cursor_pos(cursor_pos) {}
+Editor::Editor(const size_t cursor_pos)
+    : parser(Parser(ParsingScheme)), cursor_pos(cursor_pos), loaded(false) {}
 
-Editor::~Editor() {}
+Editor::~Editor() = default;
 
 size_t Editor::get_pos() const { return cursor_pos; }
 
@@ -56,7 +58,7 @@ void Editor::move(std::vector<char const*>& arguments) {
 
 void Editor::insert(std::vector<char const*>& arguments) {
     size_t word_size = util::word_size(arguments[0]);
-    // U can write a function for that or use C one. And maybe move that into text(?) = solved
+    // U can write a function for that or use C one. And maybe move that into text(?). solved
     // (decided to keep word_size measure in editor class)
     text.insert(arguments[1], std::stoi(arguments[0]), word_size);
 }
@@ -120,8 +122,8 @@ void Editor::upcase(std::vector<char const*>& arguments) {
 void Editor::lowcase(std::vector<char const*>& arguments) {
     size_t start_pos = cursor_pos;
     size_t end_pos = cursor_pos;
-    for (start_pos; text[start_pos] != ' ' && start_pos != 0; start_pos--);
-    for (end_pos; text[end_pos] != ' ' && end_pos != text.get_size(); end_pos++);
+    for (; text[start_pos] != ' ' && start_pos != 0; start_pos--);
+    for (; text[end_pos] != ' ' && end_pos != text.get_size(); end_pos++);
     text.lowcase(start_pos, end_pos);
 }
 
@@ -151,6 +153,7 @@ void Editor::load(std::vector<char const*>& arguments) {
     c_all_str[all_str.size()] = '\0';
     text = Text(c_all_str);
     delete[] c_all_str;
+    loaded = true;
 }
 
 void Editor::save(std::vector<char const*>& arguments) {}
