@@ -3,6 +3,7 @@
 #include <cstring>
 #include <iostream>
 #include <set>
+#include <fstream>
 
 class Text {
 public:
@@ -15,6 +16,7 @@ public:
     void replace(const char& x, const char& y, std::set<int>& highlighted);
     void upcase(size_t start_pos, size_t end_pos);
     void lowcase(size_t start_pos, size_t end_pos);
+    void save(const char* path);
     Text& operator=(const Text& other);
     size_t get_size() const { return size; }
     char operator[](size_t index) const { return text[index]; };

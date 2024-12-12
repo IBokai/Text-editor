@@ -31,6 +31,7 @@ std::map<std::string, ParserCommandInfo> ParsingScheme{
                                       &Editor::replace)},
         {"find", ParserCommandInfo({ParserParameter(std::regex("^[a-zA-Z]*?$"))}, &Editor::find)},
         {"load", ParserCommandInfo({ParserParameter(std::regex(".*"))}, &Editor::load)},
+        {"save", ParserCommandInfo({ParserParameter(std::regex(".*"))}, &Editor::save)}
 };
 
 Editor::Editor(const char* text, size_t cursor_pos)
@@ -156,4 +157,8 @@ void Editor::load(std::vector<char const*>& arguments) {
     loaded = true;
 }
 
-void Editor::save(std::vector<char const*>& arguments) {}
+void Editor::save(std::vector<char const*>& arguments) {
+    text.save(arguments[0]);
+    cursor_pos = 0;
+    loaded = false;
+}

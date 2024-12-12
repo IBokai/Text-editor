@@ -25,6 +25,22 @@ void Editor::run() {
     }
     input = util::process_input();
     while (input != "exit") {
+        while (!loaded) {
+            input = util::process_input();
+            if (input == "exit") {
+                return;
+            }
+            m = parser.parse(input, arguments);
+            if (m != &Editor::load) {
+                util::clear_argv(arguments);
+                std::cout << "Need to load file first" << '\n';
+            } else {
+                (this->*m)(arguments);
+                loaded = true;
+                util::clear_argv(arguments);
+                print();
+            }
+        }
         m = parser.parse(input, arguments);
         if (m != nullptr) {
             (this->*m)(arguments);
@@ -37,6 +53,9 @@ void Editor::run() {
             util::clear_argv(arguments);
         }
         std::cout << "Text size: " << text.get_size() << '\n';
+        if (m == &Editor::save) {
+            continue;
+        }
         input = util::process_input();
     }
 }

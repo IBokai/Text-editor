@@ -34,3 +34,13 @@ Text& Text::operator=(const Text& other) {
     size = other.get_size();
     return *this;
 }
+
+void Text::save(const char* path) {
+    std::ofstream file;
+    file.open(path);
+    file << text;
+    file.close();
+    delete[] text;
+    text = nullptr;
+    size = 0;
+}
