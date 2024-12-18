@@ -58,7 +58,7 @@ void Editor::move(std::vector<char const*>& arguments) {
 }
 
 void Editor::insert(std::vector<char const*>& arguments) {
-    size_t word_size = util::word_size(arguments[0]);
+    size_t word_size = util::word_size(arguments[1]);
     // U can write a function for that or use C one. And maybe move that into text(?). solved
     // (decided to keep word_size measure in editor class)
     text.insert(arguments[1], std::stoi(arguments[0]), word_size);

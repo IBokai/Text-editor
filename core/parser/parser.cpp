@@ -19,7 +19,7 @@ std::vector<std::string> Parser::split(const std::string& input) {
     std::string current;
     std::vector<std::string> splited;
     while (input[pos] != ')') {
-        if (input[pos] == ' ' || input[pos] == '(' || input[pos] == ')') {
+        if (input[pos] == ',' || input[pos] == '(' || input[pos] == ')') {
             if (!current.empty()) {
                 splited.push_back(current);
             }
