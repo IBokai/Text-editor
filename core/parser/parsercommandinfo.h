@@ -1,6 +1,5 @@
 #ifndef PARSERCOMMANDINFO_H
 #define PARSERCOMMANDINFO_H
-#include <functional>
 #include <iostream>
 #include <vector>
 
